@@ -1,0 +1,122 @@
+# Magoosh Office Hours
+
+You want to help students get ready for their tests. In order to do this, you
+need to connect them with tutors who can answer their questions during a day of
+open office hours. You will implement a command-line Office Hours program that
+features tutors, students, and scheduling conflicts.
+
+### The Process
+
+* We send you this document
+* You build your Office Hours application.
+* You send the application back to us and we review it.
+* We'll get in touch to discuss your application and how you built it.
+
+### Requirements
+
+* You can write in any language you like (Ruby, Python, Javascript, Java and
+  Objective-C are all good candidates but we'll take anything!).
+* Take whatever time you need to build your application. This isn't a
+  stop watch based exercise. We know people have jobs, lives and families they
+  need to juggle. (We hope this won't take up more than an afternoon of your
+  time though)
+* We love readable code. Use intuitive naming, code organization, clear
+  syntax and comments to make your code easy to understand.
+* You don't need to write tests for your code, but it should work ;)
+* You should write documentation for your Office Hours so we understand how to
+  build and operate it. But remember you don't need to write an essay; we'll
+  review the code with you!
+* If you have time please feel free to share the thinking that goes into
+  your design and architecture decisions, for example why you chose a language,
+  framework, or dependencies.
+* Feel free to ask any clarifying questions you want.
+* Have fun!
+
+### Sending us your code
+
+* You can send us a GitHub repository.
+* You can send us a zip file/tarball with your code.
+
+Remember we need to be able to run your code, so you should include enough
+documentation for us to be able to check out your program!
+
+### Inputs
+
+**Input commands must be handled and passed with space-delimited arguments via
+the command line.**
+
+1. The `tutor` command will create a new tutor with their available hours.
+
+```
+tutor <tutor name> <start time> <end time>
+```
+
+* Tutor names should be alphanumeric and allow underscores or dashes.
+* Tutor names should be no shorter than 3 characters but no longer than 20
+  characters.
+* Start and end times must be entered as military time on a 24-hour clock with
+  no punctuation (e.g. `1500` is 3:00pm)
+* The end time must be after the start time.
+* Tutors can only be created for a single block of contiguous time; they won't
+  have their time split across mutliple periods.
+
+2. The `reserve` command will reserve a new session with a tutor.
+
+```
+reserve <student name> <tutor name> <start time> <end time>
+```
+
+* Student names should be alphanumeric and allow underscores or dashes.
+* Student names should be no shorter than 3 characters, but no longer than 20
+  characters.
+* Start and end times must be entered as military time on a 24-hour clock with
+  no punctuation (e.g. `1500` is 3:00pm)
+* The end time must be after the start time.
+* Reservations must be at least half an hour long.
+* An error will be displayed if the tutor isn't available during that time
+  period.
+* An error will be displayed if the tutor has another student scheduled for an
+  overlapping time.
+
+3. The `schedule` command will display a tutor's schedule of reserved sessions
+   with their students, ordered by their start times.
+
+```
+schedule <tutor name>
+```
+
+4. The `student` command will display the list of sessions that a student has
+   reserved with their tutors, ordered by their start times.
+
+```
+student <student name>
+```
+
+### Example Input and Output
+
+```
+> tutor David_Model 1000 1500
+Added David_Model available 10:00am to 3:00pm
+
+> reserve Sam David_Model 1200 1300
+Scheduled Sam with David_Model from 12:00pm to 1:00pm
+
+> reserve Moriarty David_Model 1500 1600
+ERROR: David_Model is not available during that time
+
+> reserve Moriarty David_Model 1130 1230
+ERROR: David_Model already has a student during that time
+
+> reserve Moriarty David_Model 1230 1245
+ERROR: Tutoring sessions must be for at least half an hour
+
+> reserve Zack David_Model 1000 1100
+Scheduled Zack with David_Model from 10:00am to 11:00am
+
+> schedule David_Model
+-- 10:00am to 11:00am with Zack
+-- 12:00pm to 1:00pm with Sam
+
+> student Zack
+-- 10:00am to 11:00am with David_Model
+```
