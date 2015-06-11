@@ -1,0 +1,9 @@
+{
+  "name": "office-hours",
+  "version": "1.0.1",
+  "dependencies": {
+    "sqlite3": "~3.0",
+    "bookshelf": "~0.6.4",
+    "knex": "~0.5.7"
+  }
+}
