@@ -1,0 +1,1 @@
+var studentName = process.argv[2];
