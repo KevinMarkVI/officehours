@@ -34,16 +34,26 @@ module.exports = {
   },
 
   verifyTimes: function(start, end) {
-    if (start >= end) {
-      console.log("Make sure your ending time is after your starting time! Sessions must be 30 minutes");
+    var startMinutes = start.slice(2);
+    var endMinutes = end.slice(2);
+    var startHour = start.slice(0,2);
+    var endHour = end.slice(0,2);
+    var endToMinutes = parseInt(endHour) * 60 + parseInt(endMinutes);
+    var startToMinutes = parseInt(startHour) * 60 + parseInt(startMinutes);
+    var sessionLength = endToMinutes - startToMinutes;
+    
+    if (startToMinutes > endToMinutes) {
+      console.log("Oops! Starting time must be before ending time!");
       return false;
-    } else {
-      return true;
     }
+    if (sessionLength < 30) {
+      console.log("Sessions must be at least 30 minutes");
+      return false;
+    }
+    return true;
   }
 };
 
-console.log(db);
 
 
 // var check;
