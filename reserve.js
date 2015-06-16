@@ -9,3 +9,4 @@ if (process.argv.length < 5) {
   return console.log("Oops! You forgot to enter a tutor in the format 'node reserve.js Student_Name Tutor_Name Start_Time End_Time'");
 }
 
+app.reserve(studentName, tutorName, startTime, endTime);

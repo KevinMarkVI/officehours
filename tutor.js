@@ -8,8 +8,11 @@ if (process.argv.length < 5) {
   return console.log("Oops! You forgot to enter a tutor in the format 'node tutor.js Tutor_Name Start_Time End_Time'");
 }
 
+var start = app.timeToMinutes(startTime);
+var end = app.timeToMinutes(endTime);
 
-//put the variables in the database
+localStorage.setItem(tutorName, JSON.stringify([[start, end]]));
 
-//return the statement Added tutorName available 10:00am to 3:00pm
+console.log('Added tutor ' + tutorName + ' available ' + app.convertTime(startTime) +' to ' + app.convertTime(endTime) +'.');
+
 

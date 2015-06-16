@@ -3,9 +3,6 @@ if (typeof localStorage === "undefined" || localStorage === null) {
   localStorage = new LocalStorage('./scratch');
 }
 
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('office-hours.db');
-
 module.exports = {
 
   convertTime: function(militaryTime) {
@@ -60,8 +57,50 @@ module.exports = {
     }
     return true;
   },
-};
 
+  reserveConflict: function(tutorTime, start, end) {
+    // start = module.exports.timeToMinutes(start);
+    // end = module.exports.timeToMinutes(end);
+    // for (var i = 0; i < tutorTime.length; i++) {
+    //   if (tutorTime[i][0] >= start && tutorTime[i][1] <= end) {
+
+    //   }
+    // }
+    return true;
+  },
+
+  reserve: function(studentName, tutorName, start, end) {
+    console.log("PARSED: ", typeof localStorage.getItem(tutorName));
+    var tutorTimes = JSON.parse(localStorage.getItem(tutorName));
+    console.log("TUTOR TIMES: ", tutorTimes);
+
+    if (module.exports.verifyTimes(start, end) && module.exports.reserveConflict(tutorTimes, start, end)) {
+      console.log('Scheduled ' + studentName + ' with ' + tutorName + ' from ' + module.exports.convertTime(start) + ' to ' + module.exports.convertTime(end)+ '');
+
+      if (localStorage.getItem(studentName)) {
+        console.log("IN HERE");
+        var studentSchedule = JSON.parse(localStorage.getItem(studentName));
+
+        if (studentSchedule[tutorName]) {
+          console.log("IN HERE 2");
+          studentSchedule[tutorName].push([start, end]);
+          localStorage.setItem(studentName, JSON.stringify(studentSchedule));
+        } else {
+          studentSchedule[tutorName] = [[start, end]];
+          localStorage.setItem(studentName, JSON.stringify(studentSchedule));
+        }
+      } else {
+        console.log("SHOULD SEE ME");
+        var obj = {};
+        obj[tutorName] = [[start, end]];
+        localStorage.setItem(studentName, JSON.stringify(obj));
+      }
+    } else {
+      return false;
+    }
+    return true;
+  },
+};
 
 
 // var check;
