@@ -1,3 +1,8 @@
+if (typeof localStorage === "undefined" || localStorage === null) {
+  var LocalStorage = require('node-localstorage').LocalStorage;
+  localStorage = new LocalStorage('./scratch');
+}
+
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('office-hours.db');
 
@@ -33,25 +38,28 @@ module.exports = {
     }
   },
 
+  timeToMinutes: function(time) {
+    var minutes = time.slice(2);
+    var hours = time.slice(0,2);
+    var result = parseInt(hours) * 60 + parseInt(minutes);
+    return result;
+  },
+
   verifyTimes: function(start, end) {
-    var startMinutes = start.slice(2);
-    var endMinutes = end.slice(2);
-    var startHour = start.slice(0,2);
-    var endHour = end.slice(0,2);
-    var endToMinutes = parseInt(endHour) * 60 + parseInt(endMinutes);
-    var startToMinutes = parseInt(startHour) * 60 + parseInt(startMinutes);
-    var sessionLength = endToMinutes - startToMinutes;
+    start = module.exports.timeToMinutes(start);
+    end = module.exports.timeToMinutes(end);
+    var sessionLength = end - start;
     
-    if (startToMinutes > endToMinutes) {
+    if (start > end) {
       console.log("Oops! Starting time must be before ending time!");
       return false;
     }
     if (sessionLength < 30) {
-      console.log("Sessions must be at least 30 minutes");
+      console.log("Oops! Session must be at least 30 minutes!");
       return false;
     }
     return true;
-  }
+  },
 };
 
 
@@ -74,6 +82,19 @@ module.exports = {
 // db.close();
 
 /*
+
+
+if (typeof localStorage === "undefined" || localStorage === null) {
+  var LocalStorage = require('node-localstorage').LocalStorage;
+  localStorage = new LocalStorage('./scratch');
+}
+ 
+localStorage.setItem('myFirstKey', 'myFirstValue');
+console.log(localStorage.getItem('myFirstKey'));
+
+
+
+
 //Load modules
 var sqlite3         =       require('sqlite3').verbose();
 var db              =       new sqlite3.Database('./database_name.db');

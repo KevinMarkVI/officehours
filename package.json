@@ -4,6 +4,7 @@
   "dependencies": {
     "sqlite3": "~3.0",
     "bookshelf": "~0.6.4",
-    "knex": "~0.5.7"
+    "knex": "~0.5.7",
+    "node-localstorage": "~0.5.1"
   }
 }
