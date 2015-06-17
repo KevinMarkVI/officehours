@@ -5,10 +5,7 @@ if (process.argv.length != 3) {
 }
 
 var studentName = process.argv[2];
-
-if (app.verifyName(studentName)) {
-  var studentSchedule = JSON.parse(localStorage.getItem(studentName));
-  app.logSchedule(studentSchedule);
-}
+var studentSchedule = JSON.parse(localStorage.getItem(studentName));
+app.logSchedule(studentSchedule);
 
 

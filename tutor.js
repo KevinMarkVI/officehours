@@ -8,7 +8,6 @@ var tutorName = process.argv[2];
 var startTime = process.argv[3];
 var endTime = process.argv[4];
 
-
 if (app.verifyName(tutorName)) {
   var start = app.timeToMinutes(startTime);
   var end = app.timeToMinutes(endTime);
