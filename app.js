@@ -70,7 +70,8 @@ module.exports = {
     console.log("TUTORTIME: ", tutorTime);
     start = module.exports.timeToMinutes(start);
     end = module.exports.timeToMinutes(end);
-    if (start <= tutorTime[0][0] || end >= tutorTime[0][1]) {
+
+    if (start <= tutorTime[0] || end >= tutorTime[1]) {
       console.log('' + tutorName + ' is not available at the requested time.');
       return false;
     }
@@ -115,7 +116,6 @@ module.exports = {
       }
     }
   },
-
 };
 
 
