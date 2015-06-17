@@ -7,12 +7,14 @@ To build this app:
 2. Install Node.js 
   https://nodejs.org/
 
-3. cd into the directory via terminal
+3. Open Terminal/Iterm and cd into the directory
 
-4. run the command "npm install"
+4. Run the command "npm install"
   (npm is bundled with node and io.js)
 
-5. Example Inputs and Outputs
+5. Thats it!
+
+Example Inputs and Outputs:
 
 node tutor.js David_Model 1000 1500
   Added David_Model available 10:00am to 3:00pm
