@@ -91,17 +91,14 @@ module.exports = {
     
     for (var j = 0; j < studentTimes.length; j++) {
       if (start <= module.exports.timeToMinutes(studentTimes[j][0]) && end > module.exports.timeToMinutes(studentTimes[j][0])) {
-        console.log("FAILED 1");
         console.log(''+ tutorName + ' already has a student during that time');
         return false;
       }
       if (start >= module.exports.timeToMinutes(studentTimes[j][0]) && end <= module.exports.timeToMinutes(studentTimes[j][1])) {
-        console.log("FAILED 2");
         console.log(''+ tutorName + ' already has a student during that time');
         return false;
       }
       if (start < module.exports.timeToMinutes(studentTimes[j][1]) && end >= module.exports.timeToMinutes(studentTimes[j][1])) {
-        console.log("FAILED 3");
         console.log(''+ tutorName + ' already has a student during that time');
         return false;
       }
@@ -117,6 +114,7 @@ module.exports = {
 
     if (module.exports.verifyTimes(start, end) && module.exports.reserveConflict(tutorTime, tutorName, tutorSchedule, start, end)) {
       console.log('Scheduled ' + studentName + ' with ' + tutorName + ' from ' + module.exports.convertTime(start) + ' to ' + module.exports.convertTime(end)+ '');
+      
       if (localStorage.getItem(studentName)) {
         var studentObj = {};
         studentObj[tutorName] = [start, end];
