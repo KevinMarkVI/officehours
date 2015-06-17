@@ -17,13 +17,13 @@ To build this app:
 Example Inputs and Outputs:
 
 node tutor.js David_Model 1000 1500
-  Added David_Model available 10:00am to 3:00pm
+  Added tutor David_Model available 10:00am to 3:00pm
 
 node reserve.js Sam David_Model 1200 1300
   Scheduled Sam with David_Model from 12:00pm to 1:00pm
 
 node reserve.js Moriarty David_Model 1500 1600
-  David_Model is not available during that time
+  David_Model is not available at the requested time
 
 node reserve.js Moriarty David_Model 1130 1230
   David_Model already has a student during that time

@@ -36,6 +36,9 @@ module.exports = {
   },
 
   timeToMinutes: function(time) {
+    if (typeof time === 'number') {
+      time = time.toString();
+    }
     var minutes = time.slice(2);
     var hours = time.slice(0,2);
     var result = parseInt(hours) * 60 + parseInt(minutes);
@@ -70,9 +73,13 @@ module.exports = {
     start = module.exports.timeToMinutes(start);
     end = module.exports.timeToMinutes(end);
 
-    if (start <= module.exports.timeToMinutes(toString(tutorTime[0])) || end >= module.exports.timeToMinutes(toString(tutorTime[1]))) {
-      console.log('' + tutorName + ' is not available at the requested time.');
-      return false;
+    console.log(end, tutorTime[1]);
+
+    if (start <= tutorTime[0] && end >= tutorTime[0]) {
+      if (start <= tutorTime[1] && end >= tutorTime[1]) {
+        console.log('' + tutorName + ' is not available at the requested time.');
+        return false;
+      }
     }
     var studentTimes = [];
     for (var i = 0; i < tutorSchedule.length; i++) {
@@ -103,16 +110,16 @@ module.exports = {
         studentSchedule.push(studentObj);
         localStorage.setItem(studentName, JSON.stringify(studentSchedule));
 
-        var tutorObj ={};
-        tutorObj[studentName] = [start, end];
-        tutorInfo[1].push(tutorObj);
-        localStorage.setItem(tutorName, JSON.stringify(tutorInfo));
-
       } else {
-        var newObj = {};
-        newObj[tutorName] = [start, end];
-        localStorage.setItem(studentName, JSON.stringify([newObj]));
+        var newStudentObj = {};
+        newStudentObj[tutorName] = [start, end];
+        localStorage.setItem(studentName, JSON.stringify([newStudentObj]));
       }
+
+      var tutorObj ={};
+      tutorObj[studentName] = [start, end];
+      tutorInfo[1].push(tutorObj);
+      localStorage.setItem(tutorName, JSON.stringify(tutorInfo));
     }
   },
 };
