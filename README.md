@@ -23,13 +23,13 @@ node reserve.js Sam David_Model 1200 1300
   Scheduled Sam with David_Model from 12:00pm to 1:00pm
 
 node reserve.js Moriarty David_Model 1500 1600
-  David_Model is not available at the requested time
+  David_Model is not available at the requested time.
 
 node reserve.js Moriarty David_Model 1130 1230
   David_Model already has a student during that time
 
 node reserve.js Moriarty David_Model 1230 1245
-  Tutoring sessions must be for at least half an hour
+  Oops! Session must be at least 30 minutes!
 
 node reserve.js Zack David_Model 1000 1100
 Scheduled Zack with David_Model from 10:00am to 11:00am
