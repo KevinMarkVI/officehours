@@ -66,7 +66,7 @@ module.exports = {
     } 
   },
 
-  reserveConflict: function(tutorTime, tutorName, start, end) {
+  reserveConflict: function(tutorTime, tutorName, tutorSchedule, start, end) {
     console.log("TUTORTIME: ", tutorTime);
     start = module.exports.timeToMinutes(start);
     end = module.exports.timeToMinutes(end);
@@ -74,21 +74,28 @@ module.exports = {
       console.log('' + tutorName + ' is not available at the requested time.');
       return false;
     }
-
-
-    // for (var i = 0; i < tutorTime.length; i++) {
-    //   if (tutorTime[i][0] >= start && tutorTime[i][1] <= end) {
-    //   }
-    // }
+    var studentTimes = [];
+    for (var i = 0; i < tutorSchedule.length; i++) {
+      for (var key in tutorSchedule[i]) {
+        studentTimes.push(tutorSchedule[i][key]);
+      }
+    }
+    for (var j = 0; j < studentTimes.length; j++) {
+      if (start >= studentTimes[j][0] && start < studentTimes[j][1]) {
+        console.log(''+ tutorName + ' already has a student during that time');
+        return false;
+      }
+    }
     return true;
   },
 
   reserve: function(studentName, tutorName, start, end) {
     var tutorInfo = JSON.parse(localStorage.getItem(tutorName));
-    var tutorTimes = tutorInfo[0];
+    var tutorTime = tutorInfo[0];
+    var tutorSchedule = tutorInfo[1];
     var studentSchedule = JSON.parse(localStorage.getItem(studentName));
 
-    if (module.exports.verifyTimes(start, end) && module.exports.reserveConflict(tutorTimes, tutorName, start, end)) {
+    if (module.exports.verifyTimes(start, end) && module.exports.reserveConflict(tutorTime, tutorName, tutorSchedule, start, end)) {
       console.log('Scheduled ' + studentName + ' with ' + tutorName + ' from ' + module.exports.convertTime(start) + ' to ' + module.exports.convertTime(end)+ '');
       if (localStorage.getItem(studentName)) {
         var studentObj = {};
@@ -97,7 +104,7 @@ module.exports = {
         localStorage.setItem(studentName, JSON.stringify(studentSchedule));
 
         var tutorObj ={};
-        tutorObj[studentName] = [start, end];
+        tutorObj[studentName] = [module.exports.timeToMinutes(start), module.exports.timeToMinutes(end)];
         tutorInfo[1].push(tutorObj);
         localStorage.setItem(tutorName, JSON.stringify(tutorInfo));
 
