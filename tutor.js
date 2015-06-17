@@ -11,7 +11,7 @@ if (process.argv.length < 5) {
 var start = app.timeToMinutes(startTime);
 var end = app.timeToMinutes(endTime);
 
-localStorage.setItem(tutorName, JSON.stringify([[start, end]]));
+localStorage.setItem(tutorName, JSON.stringify([[start, end], []]));
 
 console.log('Added tutor ' + tutorName + ' available ' + app.convertTime(startTime) +' to ' + app.convertTime(endTime) +'.');
 

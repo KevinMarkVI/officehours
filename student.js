@@ -1,6 +1,8 @@
 var app = require('./app');
 var studentName = process.argv[2];
 
-console.log(app.timeToMinutes('0112'));
+var studentSchedule = JSON.parse(localStorage.getItem(studentName));
 
-console.log(app.verifyTimes('1350', '1419'));
+app.logSchedule(studentSchedule);
+
+
