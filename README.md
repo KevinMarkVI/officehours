@@ -7,7 +7,7 @@ To build this app:
 2. Install Node.js 
   https://nodejs.org/
 
-3. Open Terminal/Iterm and cd into the directory
+3. Open Terminal/iTerm and cd into the directory
 
 4. Run the command "npm install"
   (npm is bundled with node and io.js)
