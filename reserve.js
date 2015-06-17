@@ -1,7 +1,7 @@
 var app = require('./app');
 
-if (process.argv.length != 5) {
-  return console.log("Oops! You forgot to enter a tutor in the format 'node reserve.js Student_Name Tutor_Name Start_Time End_Time'");
+if (process.argv.length != 6) {
+  return console.log("Oops! You forgot to enter in the format 'node reserve.js Student_Name Tutor_Name Start_Time End_Time'");
 }
 
 var studentName = process.argv[2];

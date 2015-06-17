@@ -67,11 +67,10 @@ module.exports = {
   },
 
   reserveConflict: function(tutorTime, tutorName, tutorSchedule, start, end) {
-    console.log("TUTORTIME: ", tutorTime);
     start = module.exports.timeToMinutes(start);
     end = module.exports.timeToMinutes(end);
 
-    if (start <= tutorTime[0] || end >= tutorTime[1]) {
+    if (start <= module.exports.timeToMinutes(toString(tutorTime[0])) || end >= module.exports.timeToMinutes(toString(tutorTime[1]))) {
       console.log('' + tutorName + ' is not available at the requested time.');
       return false;
     }
@@ -82,7 +81,7 @@ module.exports = {
       }
     }
     for (var j = 0; j < studentTimes.length; j++) {
-      if (start >= studentTimes[j][0] && start < studentTimes[j][1]) {
+      if (start >= module.exports.timeToMinutes(studentTimes[j][0]) && start < module.exports.timeToMinutes(studentTimes[j][1])) {
         console.log(''+ tutorName + ' already has a student during that time');
         return false;
       }
@@ -105,7 +104,7 @@ module.exports = {
         localStorage.setItem(studentName, JSON.stringify(studentSchedule));
 
         var tutorObj ={};
-        tutorObj[studentName] = [module.exports.timeToMinutes(start), module.exports.timeToMinutes(end)];
+        tutorObj[studentName] = [start, end];
         tutorInfo[1].push(tutorObj);
         localStorage.setItem(tutorName, JSON.stringify(tutorInfo));
 
