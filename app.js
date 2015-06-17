@@ -73,15 +73,11 @@ module.exports = {
     start = module.exports.timeToMinutes(start);
     end = module.exports.timeToMinutes(end);
 
-    console.log(end >= tutorTime[1]);
-    console.log("END: ", end);
-    console.log("TUTOR END: ", tutorTime[1]);
-
     if (start < tutorTime[0]) {
       console.log('' + tutorName + ' is not available at the requested time.');
       return false;
     }
-    if (end >= tutorTime[1]) {
+    if (end > tutorTime[1]) {
       console.log('' + tutorName + ' is not available at the requested time.');
       return false;
     }
@@ -92,16 +88,20 @@ module.exports = {
         studentTimes.push(tutorSchedule[i][key]);
       }
     }
+    
     for (var j = 0; j < studentTimes.length; j++) {
       if (start <= module.exports.timeToMinutes(studentTimes[j][0]) && end > module.exports.timeToMinutes(studentTimes[j][0])) {
+        console.log("FAILED 1");
         console.log(''+ tutorName + ' already has a student during that time');
         return false;
       }
       if (start >= module.exports.timeToMinutes(studentTimes[j][0]) && end <= module.exports.timeToMinutes(studentTimes[j][1])) {
+        console.log("FAILED 2");
         console.log(''+ tutorName + ' already has a student during that time');
         return false;
       }
       if (start < module.exports.timeToMinutes(studentTimes[j][1]) && end >= module.exports.timeToMinutes(studentTimes[j][1])) {
+        console.log("FAILED 3");
         console.log(''+ tutorName + ' already has a student during that time');
         return false;
       }
