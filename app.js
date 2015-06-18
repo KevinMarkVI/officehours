@@ -30,9 +30,12 @@ module.exports = {
     if (name.length < 3 || name.length > 20) {
       console.log("Invalid Name Length. Names must be greater than 3 characters, but less than 21");
       return false;
-    } else {
-      return true;
     }
+    if (!(/^[a-zA-Z0-9-_]+$/.test(name))) {
+      console.log("Names may only contain lowercase and uppercase leters, numbers, dashes, or underscores");
+      return false;
+    }
+    return true;
   },
 
   timeToMinutes: function(time) {
@@ -46,10 +49,19 @@ module.exports = {
   },
 
   verifyTimes: function(start, end) {
+    if (start.length + end.length !== 8) {
+      console.log("Oops! make sure you have entered the times correctly! Ex. '0000' for '12:00AM'");
+      return false;
+    }
+
     start = module.exports.timeToMinutes(start);
     end = module.exports.timeToMinutes(end);
     var sessionLength = end - start;
-    
+
+    if (start > 1439 || end > 1439) {
+      console.log("Oops! make sure you have entered the times correctly! Ex. '0000' for '12:00AM'");
+      return false;
+    }
     if (start > end) {
       console.log("Oops! Starting time must be before ending time!");
       return false;
@@ -69,7 +81,7 @@ module.exports = {
     } 
   },
 
-  reserveConflict: function(tutorTime, tutorName, tutorSchedule, start, end) {
+  reserveAvailable: function(tutorTime, tutorName, tutorSchedule, start, end) {
     start = module.exports.timeToMinutes(start);
     end = module.exports.timeToMinutes(end);
 
@@ -112,7 +124,7 @@ module.exports = {
     var tutorSchedule = tutorInfo[1];
     var studentSchedule = JSON.parse(localStorage.getItem(studentName));
 
-    if (module.exports.verifyTimes(start, end) && module.exports.reserveConflict(tutorTime, tutorName, tutorSchedule, start, end)) {
+    if (module.exports.verifyTimes(start, end) && module.exports.reserveAvailable(tutorTime, tutorName, tutorSchedule, start, end)) {
       console.log('Scheduled ' + studentName + ' with ' + tutorName + ' from ' + module.exports.convertTime(start) + ' to ' + module.exports.convertTime(end)+ '');
       
       if (localStorage.getItem(studentName)) {
