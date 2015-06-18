@@ -10,5 +10,5 @@ var startTime = process.argv[4];
 var endTime = process.argv[5];
 
 if (app.verifyName(studentName)) {
-  app.reserve(studentName, tutorName, startTime, endTime);
+  app.reserveTime(studentName, tutorName, startTime, endTime);
 }

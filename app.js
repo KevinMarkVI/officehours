@@ -73,6 +73,13 @@ module.exports = {
     return true;
   },
 
+  addTutor: function(tutorName, startTime, endTime) {
+    var start = module.exports.timeToMinutes(startTime);
+    var end = module.exports.timeToMinutes(endTime);
+    localStorage.setItem(tutorName, JSON.stringify([[start, end], []]));
+    console.log('Added tutor ' + tutorName + ' available ' + module.exports.convertTime(startTime) +' to ' + module.exports.convertTime(endTime) +'.');
+  },
+
   logSchedule: function(schedule) {
     for (var i = schedule.length -1; i >= 0; i--) {
       for (var key in schedule[i]) {
@@ -81,7 +88,7 @@ module.exports = {
     } 
   },
 
-  reserveAvailable: function(tutorTime, tutorName, tutorSchedule, start, end) {
+  timeAvailable: function(tutorTime, tutorName, tutorSchedule, start, end) {
     start = module.exports.timeToMinutes(start);
     end = module.exports.timeToMinutes(end);
 
@@ -118,13 +125,13 @@ module.exports = {
     return true;
   },
 
-  reserve: function(studentName, tutorName, start, end) {
+  reserveTime: function(studentName, tutorName, start, end) {
     var tutorInfo = JSON.parse(localStorage.getItem(tutorName));
     var tutorTime = tutorInfo[0];
     var tutorSchedule = tutorInfo[1];
     var studentSchedule = JSON.parse(localStorage.getItem(studentName));
 
-    if (module.exports.verifyTimes(start, end) && module.exports.reserveAvailable(tutorTime, tutorName, tutorSchedule, start, end)) {
+    if (module.exports.verifyTimes(start, end) && module.exports.timeAvailable(tutorTime, tutorName, tutorSchedule, start, end)) {
       console.log('Scheduled ' + studentName + ' with ' + tutorName + ' from ' + module.exports.convertTime(start) + ' to ' + module.exports.convertTime(end)+ '');
       
       if (localStorage.getItem(studentName)) {
